@@ -29,8 +29,12 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.2.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
 
+	//config-service
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-config-client', version: '3.1.4'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '3.1.4'
+
+	//Eureka-service
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '3.1.4'
 }
 
 tasks.named('test') {
