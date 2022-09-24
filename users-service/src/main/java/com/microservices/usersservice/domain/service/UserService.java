@@ -30,11 +30,11 @@ public class UserService {
     @Autowired
     private IMotoFeignClient iMotoFeignClient;
 
-    @Value("${cars.endPoint}")
-    private String carsEndPoint;
+    //@Value("${cars.endPoint}")
+    //private String carsEndPoint;
 
-    @Value("${motos.endPoint}")
-    private String motosEndPoint;
+    //@Value("${motos.endPoint}")
+    //private String motosEndPoint;
 
     public List<UserDto> getAll(){
         return userDomainRepository.getAll();
@@ -49,11 +49,11 @@ public class UserService {
     }
 
     public List<CarDto> getCarDtoList(Long userId){
-        return restTemplate.getForObject(carsEndPoint + userId, List.class);
+        return restTemplate.getForObject("http://localhost:8002/car/user/" + userId, List.class);
     }
 
     public List<MotoDto> getMotoDtoList(Long userId){
-        return restTemplate.getForObject(motosEndPoint + userId, List.class);
+        return restTemplate.getForObject("http://localhost:8003/moto/user/" + userId, List.class);
     }
 
     public CarDto saveCar(Long userId, CarDto carDto){
