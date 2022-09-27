@@ -49,11 +49,11 @@ public class UserService {
     }
 
     public List<CarDto> getCarDtoList(Long userId){
-        return restTemplate.getForObject("http://localhost:8002/car/user/" + userId, List.class);
+        return restTemplate.getForObject("http://car-service/car/user/" + userId, List.class);
     }
 
     public List<MotoDto> getMotoDtoList(Long userId){
-        return restTemplate.getForObject("http://localhost:8003/moto/user/" + userId, List.class);
+        return restTemplate.getForObject("http://moto-service/moto/user/" + userId, List.class);
     }
 
     public CarDto saveCar(Long userId, CarDto carDto){

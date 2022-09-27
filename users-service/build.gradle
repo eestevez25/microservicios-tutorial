@@ -21,6 +21,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
@@ -36,6 +37,19 @@ dependencies {
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap', version: '3.1.4'
 	//eureka-service
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '3.1.4'
+
+	//Circuit breaker
+	/*implementation group: 'org.springframework.boot', name: 'spring-boot-actuator', version: '2.7.3'
+	implementation group: 'io.github.resilience4j:resilience4j-spring-boot2:1.7.1'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.7.4'
+
+	compile "io.github.resilience4j:resilience4j-spring-boot2:1.7.1"
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-aop')*/
+	//implementation 'org.springframework.cloud:spring-cloud-starter-hystrix:1.4.7.RELEASE'
+
+
+
 }
 
 tasks.named('test') {

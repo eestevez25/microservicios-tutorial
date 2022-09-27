@@ -4,7 +4,10 @@ import com.microservices.usersservice.domain.dto.CarDto;
 import com.microservices.usersservice.domain.dto.MotoDto;
 import com.microservices.usersservice.domain.dto.UserDto;
 import com.microservices.usersservice.domain.service.UserService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +42,9 @@ public class UserController {
         return ResponseEntity.ok(userService.save(userDto));
     }
 
+    //@HystrixCommand(fallbackMethod = "fallBackGetCarService")
     @GetMapping("/cars/{userId}")
-    public ResponseEntity<List<CarDto>> getCarList(@PathVariable Long userId){
+    public ResponseEntity<List<CarDto>> getCarList(@PathVariable("userId") Long userId){
         Optional<UserDto> user = userService.getUserById(userId);
         if(!user.isPresent()){
             return ResponseEntity.noContent().build();
@@ -50,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/motos/{userId}")
-    public ResponseEntity<List<MotoDto>> getMotoList(@PathVariable Long userId){
+    public ResponseEntity<List<MotoDto>> getMotoList(@PathVariable("userId") Long userId){
         Optional<UserDto> user = userService.getUserById(userId);
         if(user.isPresent()){
             return ResponseEntity.noContent().build();
@@ -59,6 +63,7 @@ public class UserController {
         return ResponseEntity.ok(motoDtoList);
     }
 
+    //@HystrixCommand(fallbackMethod = "fallBackSaveCarService")
     @PostMapping("/car/{userId}")
     public ResponseEntity<CarDto> carSave(@PathVariable("userId") Long userId, @RequestBody  CarDto carDto ){
         return ResponseEntity.ok(userService.saveCar(userId, carDto));
@@ -74,4 +79,12 @@ public class UserController {
         Map<String, Object> result = userService.getUserAndVehicles(userId);
         return ResponseEntity.ok(result);
     }
+
+   /* private ResponseEntity<List<CarDto>> fallBackGetCarService(@PathVariable("userId") Long userId, RuntimeException runtimeException){
+        return new ResponseEntity("El usuario : " + userId + " Tiene el carro en el taller", HttpStatus.OK);
+    }
+
+    private ResponseEntity<CarDto> fallBackSaveCarService(@PathVariable("userId") Long userId, @RequestBody  CarDto carDto, RuntimeException runtimeException){
+        return new ResponseEntity("El usuario : " + userId + " No tiene pa pagarlo", HttpStatus.OK);
+    }*/
 }
